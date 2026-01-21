@@ -2,6 +2,12 @@
 <html>
 <head>
     <title>clare's junkyard</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="apple-touch-icon" href="image.png">
+    <meta property="og:image" content="image.png">
+    <meta property="og:title" content="clare's junkyard">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="image.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ballet&display=swap" rel="stylesheet">
@@ -14,7 +20,7 @@
     ">
     <div class="topnav">
         <a class="active" href="#home">home</a>
-        <a href="#abt">abt</a>
+        <a href="#passions">｡･:*˚:✧｡</a>
         <a href="#projects">projects</a>
         <a href="#contact">contact</a>
     </div>
@@ -53,10 +59,37 @@ body {
   background-color: #717171;
   color: white;
 }
+
+#grain-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: #ddd;
+  outline: none;
+}
+
+#grain-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: black;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+#grain-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: black;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+}
 </style>
 
     <center>
-    <section id="abt">
     <h1
         style="
         font-family:'Ballet', sans-serif;
@@ -66,11 +99,18 @@ body {
         line-height: 5%;
         "
     >
-        Clare  Li
+        <br><br>Clare  Li
     </h1>
-    </section>
 
-    <img src="IMG_7740.jpg" width="350">
+    <div id="grain-container" style="position: relative; display: inline-block;">
+        <img id="target-image" src="IMG_7740.jpg" width="444" style="display: block;">
+        <canvas id="grain-canvas" style="position: absolute; top: 0; left: 0; pointer-events: none;"></canvas>
+    </div>
+    <div style="margin-top: 15px;">
+        <label for="grain-slider" style="font-family:'Times New Roman', Times, serif; margin-right: 10px;">static:</label>
+        <input type="range" id="grain-slider" min="0" max="100" value="0" style="width: 200px;">
+        <span id="grain-value" style="font-family:'Times New Roman', Times, serif; margin-left: 10px;">0%</span>
+    </div>
 
     <p
         style="
@@ -78,7 +118,7 @@ body {
         font-family:'Times New Roman', Times, serif;
         "
     >
-        i'm clare, a mechanical engineering student at the university of waterloo. i'm interested in mass-transit rail vehicles, manufacturing design, and programming.
+        <br>i'm clare, a mechanical engineering student at the university of waterloo. i'm interested in mass-transit rail vehicles, manufacturing design, and programming.
     </p>
 
     <p
@@ -89,80 +129,221 @@ body {
     >
         in my free time i enjoy engaging with fashion and music, watching movies, and making things.
     </p>
+    <br><section id="passions"></section><br><br>
 
-    <section id="projects"></section>
+    <!-- Draggable Globe Section -->
+    <div id="globe-section" style="margin-top: 100px; margin-bottom: 100px;">
+        <h1
+            style="
+            font-family:'Ballet', sans-serif;
+            font-size: 50px;
+            text-align: center;
+            margin-top: 90px;
+            line-height: 5%;
+            "
+        >
+            passions, bits of life
+        </h1>
+        <div id="globe-container" style="
+            width: 100%;
+            height: 600px;
+            position: relative;
+            perspective: 1200px;
+            perspective-origin: center center;
+            margin: 50px auto;
+            cursor: grab;
+            user-select: none;
+            background: #000;
+            border-radius: 8px;
+        ">
+            <div id="globe" style="
+                width: 100%;
+                height: 100%;
+                position: relative;
+                transform-style: preserve-3d;
+                transform-origin: center center;
+            ">
+                <!-- Images will be inserted here by JavaScript -->
+            </div>
+        </div>
+        <section id="projects"></section><br>
+    </div>
+    
     <h1
         style="
         font-family:'Ballet', sans-serif;
         font-size: 50px;
         text-align: center;
-        margin-top: 90px;
+        margin-top: 30px;
         line-height: 5%;
         "
     >
-    projects & passions
+    projects
     </h1>
+
+    <div style="margin: 40px 0 10px 0; text-align: center;">
+      <img id="otto-image" src="IMG_6618_otto1.png" alt="otto" style="cursor: pointer; width: 300px;">
+    </div>
+
 <style>
-div.gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+.carousel-container {
+  overflow: hidden;
+  padding: 20px 20px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-div.gallery-item {
-  margin: 5px;
+.card-carousel {
+  --card-width: 280px;
+  --card-height: 400px;
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  height: var(--card-height);
+  min-height: 500px;
+  overflow: visible;
+  user-select: none;
+}
+
+.card {
+  position: absolute;
+  width: var(--card-width);
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+  opacity: 0.5;
+  cursor: pointer;
   border: 1px solid #ccc;
-  width: 180px;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-div.gallery-item:hover {
+.card:hover {
   border: 1px solid #777;
 }
 
-div.gallery-item img {
-  width: 100%;
-  height: auto;
+.card[data-x="0"] {
+  opacity: 1;
+  filter: brightness(1.1);
+  z-index: 10;
 }
 
-div.gallery-item div.desc {
+.card img,
+.card video {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+
+.card[data-x="0"] img,
+.card[data-x="0"] video {
+  pointer-events: auto;
+}
+
+.card .desc {
   padding: 15px;
   text-align: center;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 14px;
+}
+
+.card a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-carousel-nav {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.card-carousel-nav button {
+  background: transparent;
+  color: black;
+  border: none;
+  padding: 8px 12px;
+  margin: 0 5px;
+  cursor: pointer;
+  font-size: 32px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.card-carousel-nav button:hover:not(:disabled) {
+  color: #333;
+}
+
+.card-carousel-nav button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Globe Styles */
+#globe-container {
+  overflow: hidden;
+}
+
+.globe-image {
+  position: absolute;
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.2s ease, filter 0.2s ease;
+  pointer-events: none;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  left: 50%;
+  top: 50%;
+  margin-left: -100px;
+  margin-top: -75px;
+}
+
+#globe-container:active {
+  cursor: grabbing;
 }
 </style>
 </head>
 
-<div class="gallery">
+<div class="carousel-container">
+  <div class="card-carousel" id="cardCarousel">
+    <div class="card" data-index="0">
+      <a target="_blank" href="battlehams.mp4">
+        <video src="battlehams.mp4" width="100%" muted></video>
+      </a>
+      <div class="desc">"battle hams": group toy design project in which two characters move laterally and on a hinge to detach the opponent's character's head.<br><br>(click the video to view it on a new tab!)</div>
+    </div>
 
-<div class="gallery-item">
-  <a target="_blank" href="battlehams.mp4">
-    <video src="battlehams.mp4" width=100%>
-  </a>
-  <div class="desc">"battle hams": group toy design project in which two characters move laterally and on a hinge to detach the opponent's character's head.<br><br>(click the video to view it on a new tab!)</div>
+    <div class="card" data-index="1">
+      <a target="_blank" href="IMG_4890.jpg">
+        <img src="IMG_4890.jpg" alt="hubcap" width="600" height="400">
+      </a>
+      <div class="desc">refurbishing a toyota hubcap from off the side of the road.</div>
+    </div>
+
+    <div class="card" data-index="2">
+      <a target="_blank" href="IMG_4622.jpg">
+        <img src="IMG_4622.jpg" alt="seal mug" width="600" height="400">
+      </a>
+      <div class="desc">seal mug 3d print, designed on solidworks.</div>
+    </div>
+  </div>
+  
+  <div class="card-carousel-nav">
+    <button id="prevBtn">←</button>
+    <button id="nextBtn">→</button>
+  </div>
 </div>
 
-<div class="gallery-item">
-  <a target="_blank" href="IMG_4890.jpg">
-    <img src="IMG_4890.jpg" alt="hubcap" width="600" height="400">
-  </a>
-  <div class="desc">refurbishing a toyota hubcap from off the side of the road.</div>
-</div>
+<hr style="width: 98%; margin: 30px auto; border: 1px solid #ccc;">
 
-<div class="gallery-item">
-  <a target="_blank" href="IMG_4622.jpg">
-    <img src="IMG_4622.jpg" alt="seal mug" width="600" height="400">
-  </a>
-  <div class="desc">seal mug 3d print, designed on solidworks.</div>
-</div>
-
-<div class="gallery-item">
-  <a target="_blank" href="IMG_4130.jpg">
-    <img src="IMG_4130.jpg" alt="f1 game" width="600" height="400">
-  </a>
-  <div class="desc">f1 3ds game! (obligatory mech eng formula 1 shoutout)</div>
-</div>
-</div>
-
-<br><br><br><br>
+<br><br>
 <section id="contact">
 <div style="position:relative; width:300px;">
   <img src="envelope.png" style="width:100%;">
@@ -175,5 +356,504 @@ div.gallery-item div.desc {
 
 </center>
 </div>
+
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+  const img = document.getElementById('target-image');
+  const canvas = document.getElementById('grain-canvas');
+  const slider = document.getElementById('grain-slider');
+  const grainValue = document.getElementById('grain-value');
+  
+  if (!img || !canvas || !slider || !grainValue) {
+    return;
+  }
+  
+  const ctx = canvas.getContext('2d');
+  let imageLoaded = false;
+
+  function getImageDimensions() {
+    const rect = img.getBoundingClientRect();
+    const width = rect.width || img.clientWidth || img.width || 350;
+    const naturalWidth = img.naturalWidth || img.width;
+    const naturalHeight = img.naturalHeight || img.height;
+    const aspectRatio = naturalHeight / naturalWidth;
+    const height = rect.height || img.clientHeight || (width * aspectRatio);
+    
+    return { width: Math.round(width), height: Math.round(height) };
+  }
+
+  function resizeCanvas() {
+    const dims = getImageDimensions();
+    if (dims.width > 0 && dims.height > 0) {
+      const rect = img.getBoundingClientRect();
+      const displayWidth = Math.round(rect.width) || img.offsetWidth || dims.width;
+      const displayHeight = Math.round(rect.height) || img.offsetHeight || dims.height;
+      
+      canvas.width = displayWidth;
+      canvas.height = displayHeight;
+      canvas.style.width = displayWidth + 'px';
+      canvas.style.height = displayHeight + 'px';
+      canvas.style.position = 'absolute';
+      canvas.style.top = '0px';
+      canvas.style.left = '0px';
+      canvas.style.margin = '0';
+      canvas.style.padding = '0';
+    }
+  }
+
+  function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+  }
+
+  function drawGrain(amount) {
+    if (!imageLoaded) {
+      return;
+    }
+
+    const dims = getImageDimensions();
+    
+    if (dims.width === 0 || dims.height === 0) {
+      return;
+    }
+
+    // sizing canvas
+    if (canvas.width !== dims.width || canvas.height !== dims.height) {
+      resizeCanvas();
+    }
+
+    if (amount === 0) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      canvas.style.visibility = 'hidden';
+      img.style.visibility = 'visible';
+      return;
+    }
+
+    // hide original
+    img.style.visibility = 'hidden';
+    canvas.style.visibility = 'visible';
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    const grain = amount / 100; 
+    
+    const noiseCanvas = document.createElement('canvas');
+    noiseCanvas.width = canvas.width;
+    noiseCanvas.height = canvas.height;
+    const noiseCtx = noiseCanvas.getContext('2d');
+    
+    const imageData = noiseCtx.createImageData(canvas.width, canvas.height);
+    const data = imageData.data;
+    
+    for (let i = 0; i < data.length; i += 4) {
+      const noise = Math.random() * 255;
+      
+      data[i] = noise;     // R
+      data[i+1] = noise;   // G
+      data[i+2] = noise;   // B
+      data[i+3] = 255;     // A
+    }
+    
+    noiseCtx.putImageData(imageData, 0, 0);
+    
+    ctx.save();
+    ctx.globalCompositeOperation = 'overlay';
+    ctx.globalAlpha = grain * 0.6; // grain strength
+    ctx.drawImage(noiseCanvas, 0, 0);
+    
+    // second layer
+    if (grain > 0.2) {
+      ctx.globalCompositeOperation = 'multiply';
+      ctx.globalAlpha = (grain - 0.2) * 0.3;
+      ctx.drawImage(noiseCanvas, 0, 0);
+    }
+    
+    // third layer
+    if (grain > 0.4) {
+      ctx.globalCompositeOperation = 'screen';
+      ctx.globalAlpha = (grain - 0.4) * 0.2;
+      ctx.drawImage(noiseCanvas, 0, 0);
+    }
+    
+    ctx.restore();
+  }
+
+  function updateGrain() {
+    const value = parseInt(slider.value) || 0;
+    drawGrain(value);
+    grainValue.textContent = value + '%';
+  }
+
+  // event listeners
+  slider.addEventListener('input', updateGrain);
+
+  window.addEventListener('resize', function() {
+    setTimeout(function() {
+      resizeCanvas();
+      if (parseInt(slider.value) > 0) {
+        updateGrain();
+      }
+    }, 50);
+  });
+
+  function init() {
+    imageLoaded = img.complete && img.naturalWidth > 0;
+    
+    if (imageLoaded) {
+      resizeCanvas();
+      img.style.visibility = 'visible';
+      canvas.style.visibility = 'hidden';
+      updateGrain();
+    }
+  }
+
+  if (img.complete && img.naturalWidth > 0) {
+    init();
+  } else {
+    img.addEventListener('load', function() {
+      imageLoaded = true;
+      init();
+    });
+    img.addEventListener('error', function() {
+    });
+  }
+
+  // fallback initialization
+  setTimeout(function() {
+    if (!imageLoaded && img.complete) {
+      imageLoaded = true;
+      init();
+    }
+  }, 300);
+});
+
+//carousel
+window.addEventListener('DOMContentLoaded', function() {
+  const carousel = document.getElementById('cardCarousel');
+  if (!carousel) return;
+
+  const cards = Array.from(carousel.querySelectorAll('.card'));
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  
+  let centerIndex = Math.floor(cards.length / 2);
+  let isDragging = false;
+  let startX = 0;
+  let scrollLeft = 0;
+
+  function updateCards() {
+    cards.forEach((card, index) => {
+      const x = index - centerIndex;
+      const absX = Math.abs(x);
+      const scale = Math.max(1 - 0.15 * absX, 0.6);
+      const offset = x * 320; // horizontal spacing
+      const opacity = x === 0 ? 1 : Math.max(1 - 0.3 * absX, 0.4);
+      
+      card.style.transform = `translate(calc(-50% + ${offset}px), -50%) scale(${scale})`;
+      card.style.opacity = opacity;
+      card.style.zIndex = cards.length - absX;
+      card.setAttribute('data-x', x);
+    });
+
+    if (prevBtn) prevBtn.disabled = centerIndex === 0;
+    if (nextBtn) nextBtn.disabled = centerIndex === cards.length - 1;
+  }
+
+  function goToNext() {
+    if (centerIndex < cards.length - 1) {
+      centerIndex++;
+      updateCards();
+    }
+  }
+
+  function goToPrev() {
+    if (centerIndex > 0) {
+      centerIndex--;
+      updateCards();
+    }
+  }
+
+  //button handlers
+  if (prevBtn) prevBtn.addEventListener('click', goToPrev);
+  if (nextBtn) nextBtn.addEventListener('click', goToNext);
+
+  cards.forEach((card, index) => {
+    card.addEventListener('click', function(e) {
+      if (card.getAttribute('data-x') !== '0') {
+        e.preventDefault();
+        e.stopPropagation();
+        const targetIndex = parseInt(card.getAttribute('data-index'));
+        if (targetIndex !== centerIndex) {
+          centerIndex = targetIndex;
+          updateCards();
+        }
+      }
+    });
+  });
+
+  carousel.addEventListener('mousedown', function(e) {
+    isDragging = true;
+    startX = e.pageX - carousel.offsetLeft;
+    scrollLeft = centerIndex;
+    carousel.style.cursor = 'grabbing';
+  });
+
+  carousel.addEventListener('mouseleave', function() {
+    isDragging = false;
+    carousel.style.cursor = 'grab';
+  });
+
+  carousel.addEventListener('mouseup', function() {
+    isDragging = false;
+    carousel.style.cursor = 'grab';
+  });
+
+  carousel.addEventListener('mousemove', function(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - carousel.offsetLeft;
+    const walk = (x - startX) * 0.01; // sensitivity
+    const newIndex = Math.round(scrollLeft - walk);
+    const clampedIndex = Math.max(0, Math.min(cards.length - 1, newIndex));
+    
+    if (clampedIndex !== centerIndex) {
+      centerIndex = clampedIndex;
+      updateCards();
+    }
+  });
+
+  let touchStartX = 0;
+  let touchStartIndex = 0;
+
+  carousel.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartIndex = centerIndex;
+  });
+
+  carousel.addEventListener('touchmove', function(e) {
+    if (!touchStartX) return;
+    const touchX = e.touches[0].clientX;
+    const diff = touchStartX - touchX;
+    const threshold = 50;
+    
+    if (Math.abs(diff) > threshold) {
+      const newIndex = diff > 0 
+        ? Math.min(cards.length - 1, touchStartIndex + 1)
+        : Math.max(0, touchStartIndex - 1);
+      
+      if (newIndex !== centerIndex) {
+        centerIndex = newIndex;
+        updateCards();
+        touchStartX = touchX;
+        touchStartIndex = centerIndex;
+      }
+    }
+  });
+
+  carousel.addEventListener('touchend', function() {
+    touchStartX = 0;
+  });
+
+  updateCards();
+  carousel.style.cursor = 'grab';
+});
+
+// draggable globe functionality
+window.addEventListener('DOMContentLoaded', function() {
+  const globeContainer = document.getElementById('globe-container');
+  const globe = document.getElementById('globe');
+  
+  if (!globeContainer || !globe) return;
+
+  // image files to use
+  const images = [
+    'IMG_3668.jpg',
+    'IMG_4130.jpg',
+    'IMG_4494.jpg',
+    'IMG_4919.jpg',
+    'IMG_1217.jpg',
+    'IMG_2281.jpg',
+    'IMG_6048.jpg',
+    'IMG_6301.jpg',
+    'IMG_6620.jpg',
+    'IMG_6772_cut.jpg'
+  ];
+
+  const radius = 250; // distance from center
+  const imageWidth = 200;
+  const imageHeight = 150;
+  
+  // create image elements and position them in a sphere using fibonacci sphere algorithm
+  images.forEach((src, index) => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.className = 'globe-image';
+    img.alt = `Image ${index + 1}`;
+    
+    // fibonacci sphere distribution for even spacing
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5)); // golden angle in radians
+    const theta = goldenAngle * index; // longitude
+    const y = 1 - (index / (images.length - 1)) * 2; // Y goes from 1 to -1
+    const radiusAtY = Math.sqrt(1 - y * y); // radius at y
+    
+    // convert to cartesian coordinates
+    const x = radius * radiusAtY * Math.cos(theta);
+    const z = radius * radiusAtY * Math.sin(theta);
+    const yPos = radius * y;
+    
+    // calculate proper rotation to face outward from center
+    // azimuth angle (rotation around Y axis) - longitude
+    const azimuth = Math.atan2(x, z) * 180 / Math.PI;
+    
+    // elevation angle (rotation around X axis) - latitude  
+    // angle from horizontal plane (0 = horizontal, positive = up)
+    const elevation = Math.atan2(yPos, radiusAtY * radius) * 180 / Math.PI;
+    
+    // position the image with proper alignment facing outward
+    // the image should face the direction from center (0,0,0) to (x, yPos, z)
+    // calculate the angle from vertical (Y axis) for proper orientation
+    const distance = Math.sqrt(x*x + yPos*yPos + z*z);
+    const normalizedX = x / distance;
+    const normalizedY = yPos / distance;
+    const normalizedZ = z / distance;
+    
+    // calculate rotations to align image normal with sphere normal
+    // y rotation: angle in XZ plane
+    const yRot = Math.atan2(normalizedX, normalizedZ) * 180 / Math.PI;
+    
+    // X rotation: angle from horizontal plane
+    const xRot = -Math.asin(normalizedY) * 180 / Math.PI;
+    
+    // position
+    img.style.transform = `translate3d(${x}px, ${yPos}px, ${z}px) rotateY(${yRot}deg) rotateX(${xRot}deg)`;
+    
+    globe.appendChild(img);
+  });
+
+  // rotation state
+  let isDragging = false;
+  let startX = 0;
+  let startY = 0;
+  let rotationX = 0;
+  let rotationY = 0;
+  let currentRotationX = 0;
+  let currentRotationY = 0;
+  
+  // update image opacity based on depth (simplified)
+  function updateImageDepths() {
+    const images = globe.querySelectorAll('.globe-image');
+    const rotXRad = rotationX * Math.PI / 180;
+    const rotYRad = rotationY * Math.PI / 180;
+    
+    images.forEach(img => {
+      const transform = img.style.transform;
+      const match = transform.match(/translate3d\(([^,]+)px,\s*([^,]+)px,\s*([^)]+)px\)/);
+      if (match) {
+        const x = parseFloat(match[1]);
+        const y = parseFloat(match[2]);
+        const z = parseFloat(match[3]);
+        
+        const cosY = Math.cos(rotYRad);
+        const sinY = Math.sin(rotYRad);
+        const cosX = Math.cos(rotXRad);
+        const sinX = Math.sin(rotXRad);
+        
+        const x1 = x * cosY - z * sinY;
+        const z1 = x * sinY + z * cosY;
+        
+        const y1 = y * cosX - z1 * sinX;
+        const z2 = y * sinX + z1 * cosX;
+        
+        // calculate opacity based on final z position
+        const normalizedZ = (z2 + radius) / (radius * 2);
+        const opacity = Math.max(0.4, Math.min(1.0, 0.4 + normalizedZ * 0.6));
+        img.style.opacity = opacity;
+      }
+    });
+  }
+
+  globeContainer.addEventListener('mousedown', function(e) {
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    globeContainer.style.cursor = 'grabbing';
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (!isDragging) return;
+    
+    const deltaX = e.clientX - startX;
+    const deltaY = e.clientY - startY;
+    
+    rotationY = currentRotationY + deltaX * 0.5;
+    rotationX = currentRotationX + deltaY * 0.5;
+    
+    rotationX = Math.max(-90, Math.min(90, rotationX));
+    
+    globe.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+    updateImageDepths();
+  });
+
+  document.addEventListener('mouseup', function() {
+    if (isDragging) {
+      isDragging = false;
+      currentRotationX = rotationX;
+      currentRotationY = rotationY;
+      globeContainer.style.cursor = 'grab';
+    }
+  });
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchRotationX = 0;
+  let touchRotationY = 0;
+
+  globeContainer.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    touchRotationX = rotationX;
+    touchRotationY = rotationY;
+  });
+
+  globeContainer.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+    
+    rotationY = touchRotationY + deltaX * 0.5;
+    rotationX = touchRotationX + deltaY * 0.5;
+    
+    rotationX = Math.max(-90, Math.min(90, rotationX));
+    
+    globe.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+    updateImageDepths();
+  });
+
+  globeContainer.addEventListener('touchend', function() {
+    currentRotationX = rotationX;
+    currentRotationY = rotationY;
+  });
+  
+  updateImageDepths();
+});
+
+// otto image hover effect
+window.addEventListener('DOMContentLoaded', function() {
+  const ottoImage = document.getElementById('otto-image');
+  if (ottoImage) {
+    const normalSrc = 'IMG_6618_otto1.png';
+    const hoverSrc = 'IMG_6619_ottomouth.png';
+    
+    ottoImage.addEventListener('mouseenter', function() {
+      this.src = hoverSrc;
+    });
+    
+    ottoImage.addEventListener('mouseleave', function() {
+      this.src = normalSrc;
+    });
+  }
+});
+</script>
+
 </body>
 </html>
