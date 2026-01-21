@@ -145,16 +145,19 @@ body {
             passions, bits of life
         </h1>
         <div id="globe-container" style="
-            width: 100%;
+            width: 100vw;
             height: 600px;
             position: relative;
             perspective: 1200px;
             perspective-origin: center center;
-            margin: 50px auto;
+            margin-top: 50px;
+            margin-bottom: 50px;
             cursor: grab;
             user-select: none;
             background: #000;
-            border-radius: 8px;
+            border-radius: 0;
+            margin-left: calc(50% - 50vw);
+            margin-right: calc(50% - 50vw);
         ">
             <div id="globe" style="
                 width: 100%;
