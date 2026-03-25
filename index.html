@@ -13,125 +13,262 @@
     <link href="https://fonts.googleapis.com/css2?family=Ballet&display=swap" rel="stylesheet">
 </head>
 
-<body
-    style="
-    margin: 0;
-    padding-top:48px;
-    ">
-    <div class="topnav">
-        <a class="active" href="#home">home</a>
-        <a href="#passions">｡･:*˚:✧｡</a>
-        <a href="#projects">projects</a>
-        <a href="#contact">contact</a>
-    </div>
-    
-<section id="home"></section>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">clare's junkyard</div>
+            <div class="sidebar-sub">sincerely,</div>
+            <div class="sidebar-sub">clare</div>
+        </div>
+        <p><p><p>
+        <nav class="sidebar-nav">
+            <a class="active" href="#home">home</a>
+            <a href="#fragments">lens_fragments.jpg</a>
+            <a href="#projects">projects</a>
+            <a href="#contact">contact</a>
+        </nav>
+    </aside>
+
 <style>
 body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
   cursor: url("cursorwrench.png") 16 0, auto;
 }
 
-.topnav {
-  background-color: #333;
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
+.sidebar {
+  flex: 0 0 260px;
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 1.75rem;
+  padding: 64px 36px 56px 36px;
+  background: #fff;
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
+.sidebar-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.sidebar-title {
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.sidebar-sub {
+  font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+
+.sidebar-nav a {
+  color: #000;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 0.9rem;
+  text-align: left;
 }
 
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
+.sidebar-nav a:hover {
+  opacity: 0.55;
 }
 
-.topnav a.active {
-  background-color: #717171;
-  color: white;
+.sidebar-nav a.active {
+  font-weight: 600;
 }
 
-#grain-slider {
-  -webkit-appearance: none;
-  appearance: none;
-  height: 6px;
-  background: #ddd;
-  outline: none;
+.main-content {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100vh;
+  align-self: stretch;
 }
 
-#grain-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 14px;
-  height: 14px;
-  background: black;
+.content-panel {
+  display: none;
+}
+
+.content-panel.is-active {
+  display: block;
+}
+
+.content-panel-inner {
+  box-sizing: border-box;
+  padding: 28px 28px 40px 28px;
+}
+
+.content-panel.is-active > .content-panel-inner {
+  animation: panelFadeIn 0.55s ease-out forwards;
+}
+
+@keyframes panelFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#home .home-body {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px;
+  text-align: left;
+}
+
+#home .home-title {
+  font-family: 'Ballet', sans-serif;
+  font-size: 100px;
+  text-align: left;
+  margin: 0 0 28px 0;
+  line-height: 1.05;
+}
+
+#home .home-intro-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+#home .grain-wrap {
+  flex: 0 0 auto;
+}
+
+#home .home-intro-text {
+  flex: 1;
+  min-width: 220px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #000;
+  text-align: left;
+}
+
+#home .home-intro-text p {
+  margin: 0 0 1.1em 0;
+}
+
+#home .home-intro-text p:last-child {
+  margin-bottom: 0;
+}
+
+#contact .contact-visual {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+#contact .contact-form-block {
+  max-width: 520px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: left;
+}
+
+#contact .contact-form {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#contact .contact-form .row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+#contact .contact-form .row.single {
+  display: block;
+}
+
+#contact .contact-form input,
+#contact .contact-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #555;
+  background: #fff;
+  font-size: 15px;
+  box-sizing: border-box;
+  color: #000;
+}
+
+#contact .contact-form .half {
+  flex: 1;
+  min-width: 0;
+}
+
+#contact .contact-form textarea {
+  min-height: 140px;
+  resize: vertical;
+  font-family: inherit;
+  margin-bottom: 12px;
+}
+
+#contact .contact-form input::placeholder,
+#contact .contact-form textarea::placeholder {
+  color: #777;
+}
+
+#contact .contact-form button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  background: #000;
+  color: #fff;
   border: none;
-  border-radius: 0;
+  font-weight: 700;
+  font-size: 16px;
   cursor: pointer;
+  font-family: inherit;
 }
 
-#grain-slider::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
-  background: black;
-  border: none;
-  border-radius: 0;
-  cursor: pointer;
+#contact .contact-form button[type="submit"]:hover {
+  opacity: 0.88;
 }
+
 </style>
 
-    <center>
-    <h1
-        style="
-        font-family:'Ballet', sans-serif;
-        font-size: 100px;
-        text-align: center;
-        margin-top: 100px;
-        line-height: 5%;
-        "
-    >
-        <br><br>Clare  Li
-    </h1>
-
+    <main class="main-content">
+    <section class="content-panel is-active" id="home">
+    <div class="content-panel-inner">
+    <div class="home-body">
+    <h1 class="home-title">Clare  Li</h1>
+    <div class="home-intro-row">
+    <div class="grain-wrap">
     <div id="grain-container" style="position: relative; display: inline-block;">
         <img id="target-image" src="IMG_7740.jpg" width="444" style="display: block;">
         <canvas id="grain-canvas" style="position: absolute; top: 0; left: 0; pointer-events: none;"></canvas>
     </div>
-    <div style="margin-top: 15px;">
-        <label for="grain-slider" style="font-family:'Times New Roman', Times, serif; margin-right: 10px;">static:</label>
-        <input type="range" id="grain-slider" min="0" max="100" value="0" style="width: 200px;">
-        <span id="grain-value" style="font-family:'Times New Roman', Times, serif; margin-left: 10px;">0%</span>
     </div>
+    <div class="home-intro-text">
+    <p>i'm clare, a mechanical engineering student at the university of waterloo. i'm interested in vehicles and aircraft, manufacturing design, and programming.</p>
+    <p>in my free time i enjoy engaging with fashion, music, and games, watching movies, and making things.</p>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
 
-    <p
-        style="
-        text-align: center;
-        font-family:'Times New Roman', Times, serif;
-        "
-    >
-        <br>i'm clare, a mechanical engineering student at the university of waterloo. i'm interested in mass-transit rail vehicles, manufacturing design, and programming.
-    </p>
+    <section class="content-panel" id="fragments">
+    <div class="content-panel-inner">
+    <center>
 
-    <p
-        style="
-        text-align: center;
-        font-family:'Times New Roman', Times, serif;
-        "
-    >
-        in my free time i enjoy engaging with fashion and music, watching movies, and making things.
-    </p>
-    <br><section id="passions"></section><br><br>
-
-    <!-- Draggable Globe Section -->
     <div id="globe-section" style="margin-top: 100px; margin-bottom: 100px;">
         <h1
             style="
@@ -142,7 +279,7 @@ body {
             line-height: 5%;
             "
         >
-            passions, bits of life
+            fragments of life
         </h1>
         <div id="globe-container" style="
             width: 100vw;
@@ -169,9 +306,15 @@ body {
                 <!-- Images will be inserted here by JavaScript -->
             </div>
         </div>
-        <section id="projects"></section><br>
     </div>
-    
+    </center>
+    </div>
+    </section>
+
+    <section class="content-panel" id="projects">
+    <div class="content-panel-inner">
+    <center>
+
     <h1
         style="
         font-family:'Ballet', sans-serif;
@@ -250,8 +393,9 @@ body {
 .card .desc {
   padding: 15px;
   text-align: center;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
+  color: #000;
 }
 
 .card a {
@@ -273,7 +417,7 @@ body {
   margin: 0 5px;
   cursor: pointer;
   font-size: 32px;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .card-carousel-nav button:hover:not(:disabled) {
@@ -312,7 +456,6 @@ body {
   cursor: grabbing;
 }
 </style>
-</head>
 
 <div class="carousel-container">
   <div class="card-carousel" id="cardCarousel">
@@ -344,35 +487,118 @@ body {
   </div>
 </div>
 
-<hr style="width: 98%; margin: 30px auto; border: 1px solid #ccc;">
+    </center>
+    </div>
+    </section>
 
-<br><br>
-<section id="contact">
-<div style="position:relative; width:300px;">
+    <section class="content-panel" id="contact">
+    <div class="content-panel-inner">
+    <div class="contact-visual">
+<div style="position:relative; width:300px; margin:0 auto;">
   <img src="envelope.png" style="width:100%;">
   <div style="position:absolute; top:140px; left:58px; color:rgb(0, 0, 0);">
-    contact me<br>email: c793li@uwaterloo.ca<br><a href="https://github.com/clarelii">github</a>
+    contact me<br>email: c793li@uwaterloo.ca<br><a href="https://github.com/clarelii">github</a> (somewhat inactive)
   </div>
 </div>
-<br><br>
-</section>
+    </div>
+    <div class="contact-form-block">
+    <form class="contact-form" action="https://formsubmit.co/c793li@uwaterloo.ca" method="POST">
+      <input type="hidden" name="_subject" value="Message from clare's junkyard">
+      <input type="hidden" name="_next" value="https://clarelii.github.io/#contact">
+      <div class="row">
+        <input class="half" type="text" name="first_name" placeholder="first name" autocomplete="given-name" required>
+        <input class="half" type="text" name="last_name" placeholder="last name" autocomplete="family-name" required>
+      </div>
+      <div class="row single">
+        <input type="email" name="email" placeholder="email" autocomplete="email" required>
+      </div>
+      <div class="row single">
+        <input type="text" name="subject" placeholder="subject" required>
+      </div>
+      <div class="row single">
+        <textarea name="message" placeholder="message" required></textarea>
+      </div>
+      <button type="submit">send</button>
+    </form>
+    </div>
+    </div>
+    </section>
 
-</center>
-</div>
+    </main>
 
 <script>
+(function() {
+  const ROUTES = ['home', 'fragments', 'projects', 'contact'];
+
+  function routeFromHash() {
+    let h = (location.hash || '#home').replace(/^#/, '');
+    if (!ROUTES.includes(h)) {
+      h = 'home';
+    }
+    return h;
+  }
+
+  function applyRoute(route) {
+    const main = document.querySelector('.main-content');
+    if (main) {
+      main.scrollTop = 0;
+    }
+    ROUTES.forEach(function(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.toggle('is-active', id === route);
+      }
+    });
+    document.querySelectorAll('.sidebar-nav a').forEach(function(a) {
+      const target = a.getAttribute('href');
+      a.classList.toggle('active', target === '#' + route);
+    });
+    window.dispatchEvent(new Event('resize'));
+    setTimeout(function() {
+      window.dispatchEvent(new Event('resize'));
+    }, 80);
+  }
+
+  document.querySelectorAll('.sidebar-nav a').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      const hash = a.getAttribute('href');
+      if (location.hash !== hash) {
+        location.hash = hash;
+      } else {
+        applyRoute(routeFromHash());
+      }
+    });
+  });
+
+  window.addEventListener('hashchange', function() {
+    applyRoute(routeFromHash());
+  });
+
+  function initFromHash() {
+    applyRoute(routeFromHash());
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFromHash);
+  } else {
+    initFromHash();
+  }
+})();
 window.addEventListener('DOMContentLoaded', function() {
   const img = document.getElementById('target-image');
   const canvas = document.getElementById('grain-canvas');
-  const slider = document.getElementById('grain-slider');
-  const grainValue = document.getElementById('grain-value');
   
-  if (!img || !canvas || !slider || !grainValue) {
+  if (!img || !canvas) {
     return;
   }
   
   const ctx = canvas.getContext('2d');
   let imageLoaded = false;
+  let currentAmount = 0;
+  let lastDrawnAmount = -1;
+  let rafId = null;
+  const MAX_DIST_PX = 420;
 
   function getImageDimensions() {
     const rect = img.getBoundingClientRect();
@@ -406,6 +632,43 @@ window.addEventListener('DOMContentLoaded', function() {
 
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
+  }
+
+  function distanceToImageBounds(clientX, clientY) {
+    const rect = img.getBoundingClientRect();
+    const nx = clamp(clientX, rect.left, rect.right);
+    const ny = clamp(clientY, rect.top, rect.bottom);
+    const dx = clientX - nx;
+    const dy = clientY - ny;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function amountFromDistance(dist) {
+    const t = Math.min(dist / MAX_DIST_PX, 1);
+    return Math.round(100 * (1 - t));
+  }
+
+  function updateAmountFromPointer(clientX, clientY) {
+    if (!imageLoaded) {
+      return;
+    }
+    const dist = distanceToImageBounds(clientX, clientY);
+    currentAmount = amountFromDistance(dist);
+    scheduleGrainDraw();
+  }
+
+  function scheduleGrainDraw() {
+    if (rafId !== null) {
+      return;
+    }
+    rafId = requestAnimationFrame(function() {
+      rafId = null;
+      if (currentAmount === lastDrawnAmount) {
+        return;
+      }
+      drawGrain(currentAmount);
+      lastDrawnAmount = currentAmount;
+    });
   }
 
   function drawGrain(amount) {
@@ -478,21 +741,32 @@ window.addEventListener('DOMContentLoaded', function() {
     ctx.restore();
   }
 
-  function updateGrain() {
-    const value = parseInt(slider.value) || 0;
-    drawGrain(value);
-    grainValue.textContent = value + '%';
+  function onPointerMove(e) {
+    const x = e.clientX;
+    const y = e.clientY;
+    if (typeof x === 'number' && typeof y === 'number') {
+      updateAmountFromPointer(x, y);
+    }
   }
 
-  // event listeners
-  slider.addEventListener('input', updateGrain);
+  window.addEventListener('mousemove', onPointerMove, { passive: true });
+  window.addEventListener('touchmove', function(e) {
+    if (e.touches.length > 0) {
+      updateAmountFromPointer(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, { passive: true });
+  window.addEventListener('touchstart', function(e) {
+    if (e.touches.length > 0) {
+      updateAmountFromPointer(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, { passive: true });
 
   window.addEventListener('resize', function() {
     setTimeout(function() {
       resizeCanvas();
-      if (parseInt(slider.value) > 0) {
-        updateGrain();
-      }
+      lastDrawnAmount = -1;
+      drawGrain(currentAmount);
+      lastDrawnAmount = currentAmount;
     }, 50);
   });
 
@@ -503,7 +777,9 @@ window.addEventListener('DOMContentLoaded', function() {
       resizeCanvas();
       img.style.visibility = 'visible';
       canvas.style.visibility = 'hidden';
-      updateGrain();
+      lastDrawnAmount = -1;
+      drawGrain(0);
+      lastDrawnAmount = 0;
     }
   }
 
@@ -656,6 +932,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
   updateCards();
   carousel.style.cursor = 'grab';
+  window.addEventListener('resize', updateCards);
 });
 
 // draggable globe functionality
